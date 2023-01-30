@@ -1,0 +1,33 @@
+import React, { createContext, useContext } from "react";
+import './App.css';
+
+const AuthContext = createContext();
+const OrgContext = createContext();
+const ThemeContext = createContext();
+
+function App() {
+  return (
+    <AuthContext.Provider value={{ authenticated: true }}>
+      <OrgContext.Provider value={{ name: 'DevAcademy' }}>
+        <ThemeContext.Provider value={{ mode: 'dark' }}>
+          <Button />
+        </ThemeContext.Provider> 
+      </OrgContext.Provider>
+    </AuthContext.Provider>
+  );
+}
+
+function Button() {
+  const auth = useContext(AuthContext);
+  const theme = useContext(ThemeContext);
+  const org = useContext(OrgContext);
+  
+  return (
+    <button className={theme.mode === 'dark' && 'dark-mode'}>
+      {auth.authenticated ? `Logout from ${org.name}`: 'Login'}
+    </button>
+  );
+}
+
+
+export default App;

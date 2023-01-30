@@ -1,0 +1,138 @@
+import React, { useState } from "react";
+import './App.css';
+
+
+function App() {
+  const  [state, setState] = useState('');
+
+  function handleClick () {
+    console.log('State updated');
+    setState(Math.random());	
+  }
+  
+  return (
+    <Button onClick={handleClick} />
+  )
+
+}
+
+function Button(props) {
+  console.log('Button re-rendered');
+  return (
+    <button onClick={props.onClick}>
+      Clique
+    </button>
+  )
+}
+
+export default App;
+
+
+--------------------
+
+import React, { useState } from "react";
+import { useCallback } from "react";
+import './App.css';
+
+const fnCounter = new Set();
+
+function App() {
+  const  [counter, setCounter] = useState(0);
+
+  const handlePlus = useCallback(() => {
+    setCounter((prevState) => prevState + 1);
+  }, []);
+  
+  fnCounter.add(handlePlus);
+  console.log(fnCounter.size)
+
+  return (
+    <>
+      <h1>{counter}</h1>
+      <button onClick={handlePlus}>+</button>
+    </>
+  );
+}
+
+export default App;
+
+-------------------------
+
+import React, { useState } from "react";
+import { useCallback } from "react";
+import './App.css';
+
+const fnCounter = new Set();
+
+function App() {
+  const  [counter, setCounter] = useState(0);
+
+  // const handlePlus = useCallback(() => {
+  //   setCounter((prevState) => prevState + 1);
+  // }, []);
+
+  function handlePlus() {
+    setCounter((prevState) => prevState + 1);
+  }
+  
+  fnCounter.add(handlePlus);
+  console.log(fnCounter.size)
+
+  return (
+    <>
+      <h1>{counter}</h1>
+      <Button onClick={handlePlus}/>
+    </>
+  );
+}
+
+const Button = React.memo((props) => {
+  console.log('Button re-rendered')
+  return (
+    <button onClick={props.onClick}>
+      Clique
+    </button>
+  );
+}); 
+
+export default App;
+-----------------
+
+import React, { useState } from "react";
+import { useCallback } from "react";
+import './App.css';
+
+const fnCounter = new Set();
+
+function App() {
+  const  [counter, setCounter] = useState(0);
+
+  const handleClick = useCallback(() => {
+    setCounter(Math.random());
+  }, []);
+
+  // function handlePlus() {
+  //   setCounter((prevState) => prevState + 1);
+  // }
+  
+  fnCounter.add(handleClick);
+  console.log(fnCounter.size)
+
+  return (
+    <>
+      <h1>{counter}</h1>
+      <Button onClick={handleClick}/>
+    </>
+  );
+}
+
+const Button = React.memo((props) => {
+  console.log('Button re-rendered')
+  return (
+    <button onClick={props.onClick}>
+      Clique
+    </button>
+  );
+}); 
+
+export default App;

@@ -1,0 +1,43 @@
+import React, { useRef, forwardRef, useImperativeHandle } from "react";
+import './App.css';
+
+function App() {
+  const formRef = useRef(null);
+
+  function handleSumbit() {
+    formRef.current.submit();
+  }
+
+  return (
+    <>
+      <Form ref={formRef} />
+      <button onClick={handleSumbit}>Submit</button>
+    </>
+  );
+}
+
+const Form = forwardRef((props, ref) => {
+  const inputRef = useRef(null);
+
+  function handleSubmit() {
+    alert(inputRef.current.value);
+  }
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        submit: handleSubmit,
+      };
+    },
+    [],
+  );
+  
+  return (
+    <form>
+      <input ref={inputRef} />
+    </form>
+  );
+});
+
+export default App;

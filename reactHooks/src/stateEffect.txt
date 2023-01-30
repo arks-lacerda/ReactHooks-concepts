@@ -1,0 +1,67 @@
+import { useState, useEffect } from 'react'
+import './App.css'
+
+function App() {
+  const [counter, setCounter] = useState(0);
+  const [name, setName] = useState('');
+
+  // useEffect(() => {
+  //   console.log('useEffect rodou!', name)
+  // }, [name]/*array dependency - valor alterar ela executa novamente*/);
+
+  // useEffect async
+  // useEffect(() => {
+  //   //IIFE -> Immediately Invoked Function Expression
+  //   (async () => {
+
+  //   })();
+  // }, []); 
+
+  // useEffect(() => {
+  //   console.log('useEffect rodou')
+
+  //   return () => {
+  //     //componentWillUnmount()
+  //     console.log('vai desmontar ...')
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    console.log('first render');
+  }, []);
+
+  useEffect(() => {
+    console.log('counter');
+  }, [counter]);
+
+  useEffect(() => {
+    console.log('name');
+  }, [name]);
+  
+  function handlePlus() {
+    setCounter((prevState) => prevState + 1);
+  }
+
+  function handleMinus() {
+    // setTimeout(() => {
+    //   setCounter((prevState) => prevState - 1);
+    // }, 2000)
+    setCounter((prevState) => prevState - 1);
+  }
+
+  return (
+    <div>
+      <h1>{counter}</h1>
+      <button onClick={handlePlus}>+</button> 
+      <button onClick={handleMinus}>-</button>
+      <br />
+      <br />
+      <br />
+      <span>{name}</span>
+      <br />
+      <input onChange={e => setName(e.target.value)} />
+    </div>
+  );
+}
+
+export default App;

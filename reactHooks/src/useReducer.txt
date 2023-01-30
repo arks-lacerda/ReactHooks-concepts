@@ -1,0 +1,197 @@
+import { useReducer } from "react";
+import './App.css';
+
+const inicialState = 1;
+function inicializer(inicialValue) {
+  return { count: inicialValue };
+}
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return { count: state.count + 1 };
+    case 'decrement':
+      return { count: state.count - 1 };
+    default: 
+      throw new Error(`Invalid action type`);
+  }
+}
+
+function App() {
+  const [state, dispatch] =  useReducer(reducer, inicialState, inicializer);
+  
+  return (
+    <div>
+      <h1>Valor atual: {state.count}</h1>
+      <button onClick={() => dispatch({ type: 'increment' })}>+</button>
+      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+    </div>
+  );
+}
+
+function Button() {
+  const auth = useContext(AuthContext);
+  const theme = useContext(ThemeContext);
+  const org = useContext(OrgContext);
+  
+  return (
+    <button className={theme.mode === 'dark' && 'dark-mode'}>
+      {auth.authenticated ? `Logout from ${org.name}`: 'Login'}
+    </button>
+  );
+}
+
+export default App;
+
+
+-----------------------------
+import { useEffect } from "react";
+import { useReducer } from "react";
+import './App.css';
+
+const initialState = {
+  isLoading: true,
+  hasError: false,
+  users: [],
+}
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'success':
+      return {
+        isLoading: false,
+        hasError: false,
+        users: action.payload.users,
+      };
+    case 'error':
+      return { 
+        isLoading: false,
+        hasError: true,
+        users: [],
+      };
+    default:
+      throw new Error('Invalid action type');
+  }
+}
+
+function Users() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await services.getUsers();
+        dispatch({ type: 'success', payload: { users: data }});
+      } catch(err) {
+        dispatch({ type: 'error'});
+      }
+    })();
+  },[])
+}
+
+-------------------------------
+import React, { useReducer } from "react";
+import './App.css';
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'plus': 
+      return {
+        counter: state.counter + 1,
+        clicks: state.clicks + 1,
+      };
+    case 'minus':
+      return {
+          counter: state.counter - 1,
+          clicks: state.clicks + 1,
+      };
+    default:
+      return state;
+  }
+
+  // Não é uma boa prática
+  // if(action.type === 'plus') {
+  //   return {
+  //     counter: state.counter + 1,
+  //     clicks: state.clicks + 1,
+  //    };
+  // }
+
+  // if(action.type === 'minus') {
+  //   return {
+  //     counter: state.counter - 1,
+  //     clicks: state.clicks + 1,
+  //    };
+  // }
+
+  return state;
+}
+
+const intialValue = {
+  counter: 0,
+  clicks: 0,
+}
+
+function App() {
+  const [state, dispatch] = useReducer(reducer, intialValue);
+
+  function handlePlus() {
+    dispatch({ type: 'plus' });
+  }
+
+  function handleMinus() {
+    dispatch({ type: 'minus' });
+  }
+
+  return (
+    <>
+      <h1>{state.counter}</h1>
+      <h4>cliques: {state.clicks}</h4>
+      <button onClick={handlePlus}>+</button>
+      <button onClick={handleMinus}>-</button>
+    </>
+  )
+}
+
+export default App;
+
+
+---------------------
+import React, { useState } from "react";
+import { useCallback } from "react";
+import './App.css';
+
+const fnCounter = new Set();
+
+function App() {
+  const  [counter, setCounter] = useState(0);
+
+  const handlePlus = useCallback(() => {
+    setCounter((prevState) => prevState + 1);
+  }, []);
+
+  // function handlePlus() {
+  //   setCounter((prevState) => prevState + 1);
+  // }
+  
+  fnCounter.add(handlePlus);
+  console.log(fnCounter.size)
+
+  return (
+    <>
+      <h1>{counter}</h1>
+      <Button onClick={handlePlus}/>
+    </>
+  );
+}
+
+const Button = React.memo((props) => {
+  console.log('Button re-rendered')
+  return (
+    <button onClick={props.onClick}>
+      Clique
+    </button>
+  );
+}); 
+
+export default App;

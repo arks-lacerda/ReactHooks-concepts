@@ -1,0 +1,35 @@
+import React, { useState } from "react";
+import { useEffect } from "react";
+import './App.css';
+
+function App() {
+  const [name, setName] = useLocalStorage('name');
+
+  return (
+    <input value={name} onChange={e => setName(e.target.value)} />
+  )
+};
+
+function useLocalStorage(key, initialValue =  '') {
+  const [state, setState] = useState(() =>{
+    const storedData = localStorage.getItem(key);
+  
+    if (storedData) {
+      // Se houver algo salvo, retorna ...
+      return JSON.parse(storedData);
+    }
+  
+    // Se não houver nada salvo, retorna initialValue ...
+    return intialValue;
+  });
+
+  useEffect(() => {
+    // Toda vez que state for alterado, salva mo localStorage ...
+    localStorage.setItem(key, JSON.stringify(state));
+  }, [key, state]);
+
+  // Deixamos o state e o setState acessíveis para
+  // quem for usar esta hook ...
+  return [state, setState];
+}
+export default App;

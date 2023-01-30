@@ -1,0 +1,52 @@
+import React, { useRef } from "react";
+import './App.css';
+
+function App() {
+  console.log('rendered');
+  
+  const number = useRef(0);
+
+  function handleSetValue () {
+    const newNumber = Math.round(Math.random() * (10 -1) +1);
+    number.current = newNumber;
+  };
+
+  function handlePrintValue () {
+    alert(number.current);
+  }
+
+  return (
+    <>
+      <button onClick={handleSetValue}>Set value</button>
+      <button onClick={handlePrintValue}>Print value</button>
+    </>
+  );
+}
+
+export default App;
+
+---------------------
+import React, { useRef } from "react";
+import './App.css';
+
+function App() {
+  console.log('rendered');
+  
+  const inputRef = useRef(null);
+
+  function handlePrintName () {
+    alert(inputRef.current.value);
+    // console.log(inputRef.current)
+    // inputRef.current.focus();
+  }
+
+  return (
+    <>
+      {/* <input onChange={e => inputRef.current = e.target.value} /> */}
+      <input ref={inputRef} />
+      <button onClick={handlePrintName}>Print name</button>
+    </>
+  );
+}
+
+export default App;
