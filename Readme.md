@@ -6,46 +6,24 @@
 <p align="center">
   This e-book created by Mateus Silva addresses the topics below:
 </p>
-
-  ## 🚀 Affected topics
-<ul>
-  <li>What are hooks?</li>
-  <li>Logic reuse</li>
-  <li>Very large components</li>
-  <li>A mess called classes</li>
-  <li>After the storm… the hooks</li>
-  <li>State in functional components</li>
-  <li>Where did lifecycle methods go?</li>
-  <li>New way to use the Context API</li>
-  <li>useReducer</li>
-  <li>Performance and memorization</li>
-  <li>Avoiding unnecessary renderings</li>
-  <li>Removing heavy calculations from within the render</li>
-  <li>Accessing elements in the DOM by references</li>
-  <li>useImperativeHandle e forwardRef</li>
-  <li>useEffect vs useLayoutEffect</li>
-  <li>Custom Hooks</li>
-  <li>useDebugValue</li>
-</ul>
 <hr>
+<p align="center">
+  Alura's Challenge and I'll get better with time.
+</p>
 
 ## 💻 Technology to use part of study
  I use vite to study the e-book and follow the videos taught by Mateus in an excellent way.
 
-- React
+- Html
 - JavaScript
-- By Vite
+- Css
 
 <hr>
 
-## 💻 ebook link
-Follow the e-book [Mateus Silva](https://devacademy.com.br/ebooks/react-hooks/) to access it.
+## 💻 Project link
+[Here the Link](https://arks-lacerda.github.io/convertRealToBitCoinsAndLightYearsToMeters/).
 <hr>
 
 ## 📝 License
 
 This project is licensed under the MIT license.
-
----
-
-I recommend the ebook and explanatory video  👋
